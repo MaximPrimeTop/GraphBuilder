@@ -23,5 +23,14 @@
     <ClInclude Include="GraphForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ChangeRadiusForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomGraphGeneratorForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StatsForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

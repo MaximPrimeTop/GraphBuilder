@@ -123,13 +123,31 @@
     <ClCompile Include="GraphForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChangeRadiusForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="GraphForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="RandomGraphGeneratorForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="StatsForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ChangeRadiusForm.resx">
+      <DependentUpon>ChangeRadiusForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GraphForm.resx">
       <DependentUpon>GraphForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RandomGraphGeneratorForm.resx">
+      <DependentUpon>RandomGraphGeneratorForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StatsForm.resx">
+      <DependentUpon>StatsForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
