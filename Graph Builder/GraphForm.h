@@ -86,6 +86,7 @@ namespace GraphBuilder {
 	private: System::Windows::Forms::ToolStripMenuItem^ optionsToolStripMenuItem1;
 	private: System::Windows::Forms::ToolStripMenuItem^ generateGraphToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ newToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ orientedGraphsToolStripMenuItem;
 
 
 
@@ -134,6 +135,7 @@ namespace GraphBuilder {
 			this->panelDraw = (gcnew System::Windows::Forms::Panel());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->newToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->saveToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->toolsToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -147,7 +149,7 @@ namespace GraphBuilder {
 			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->newToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->orientedGraphsToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->panelDraw->SuspendLayout();
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
@@ -184,13 +186,22 @@ namespace GraphBuilder {
 			this->fileToolStripMenuItem->Size = System::Drawing::Size(37, 20);
 			this->fileToolStripMenuItem->Text = L"&File";
 			// 
+			// newToolStripMenuItem
+			// 
+			this->newToolStripMenuItem->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"newToolStripMenuItem.Image")));
+			this->newToolStripMenuItem->ImageTransparentColor = System::Drawing::Color::Magenta;
+			this->newToolStripMenuItem->Name = L"newToolStripMenuItem";
+			this->newToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::N));
+			this->newToolStripMenuItem->Size = System::Drawing::Size(146, 22);
+			this->newToolStripMenuItem->Text = L"&New";
+			// 
 			// openToolStripMenuItem
 			// 
 			this->openToolStripMenuItem->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"openToolStripMenuItem.Image")));
 			this->openToolStripMenuItem->ImageTransparentColor = System::Drawing::Color::Magenta;
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
 			this->openToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::O));
-			this->openToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(146, 22);
 			this->openToolStripMenuItem->Text = L"&Open";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::openToolStripMenuItem_Click);
 			// 
@@ -200,7 +211,7 @@ namespace GraphBuilder {
 			this->saveToolStripMenuItem->ImageTransparentColor = System::Drawing::Color::Magenta;
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
 			this->saveToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::S));
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(146, 22);
 			this->saveToolStripMenuItem->Text = L"&Save";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::saveToolStripMenuItem_Click);
 			// 
@@ -252,7 +263,10 @@ namespace GraphBuilder {
 			// 
 			// optionsToolStripMenuItem1
 			// 
-			this->optionsToolStripMenuItem1->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->generateGraphToolStripMenuItem });
+			this->optionsToolStripMenuItem1->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->generateGraphToolStripMenuItem,
+					this->orientedGraphsToolStripMenuItem
+			});
 			this->optionsToolStripMenuItem1->Name = L"optionsToolStripMenuItem1";
 			this->optionsToolStripMenuItem1->Size = System::Drawing::Size(180, 22);
 			this->optionsToolStripMenuItem1->Text = L"&Options";
@@ -283,14 +297,13 @@ namespace GraphBuilder {
 			this->timer1->Enabled = true;
 			this->timer1->Tick += gcnew System::EventHandler(this, &GraphForm::timer1_Tick_1);
 			// 
-			// newToolStripMenuItem
+			// orientedGraphsToolStripMenuItem
 			// 
-			this->newToolStripMenuItem->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"newToolStripMenuItem.Image")));
-			this->newToolStripMenuItem->ImageTransparentColor = System::Drawing::Color::Magenta;
-			this->newToolStripMenuItem->Name = L"newToolStripMenuItem";
-			this->newToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::N));
-			this->newToolStripMenuItem->Size = System::Drawing::Size(180, 22);
-			this->newToolStripMenuItem->Text = L"&New";
+			this->orientedGraphsToolStripMenuItem->CheckOnClick = true;
+			this->orientedGraphsToolStripMenuItem->Name = L"orientedGraphsToolStripMenuItem";
+			this->orientedGraphsToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->orientedGraphsToolStripMenuItem->Text = L"Oriented Graphs";
+			this->orientedGraphsToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::orientedGraphsToolStripMenuItem_Click);
 			// 
 			// GraphForm
 			// 
@@ -318,6 +331,7 @@ namespace GraphBuilder {
 		static Color currentColor = Color::Black;
 		static Random^ rnd = gcnew Random();
 		static StatsForm^ stats;
+		static bool isOriented = false;
 		enum class DrawingState
 		{
 			Vertex,
@@ -393,15 +407,27 @@ namespace GraphBuilder {
 
 				bool operator==(Edge^ other)
 				{
-					return (vertex1 == other->vertex1 && vertex2 == other->vertex2) || (vertex1 == other->vertex2 && vertex2 == other->vertex1);
+					if (isOriented)
+						return vertex1 == other->vertex1 && vertex2 == other->vertex2;
+
+					return (vertex1 == other->vertex1 && vertex2 == other->vertex2) ||
+						(vertex1 == other->vertex2 && vertex2 == other->vertex1);
 				}
 
 				void Draw(Color colorV, Color colorE)
 				{
 					Pen^ pen = gcnew Pen(colorE);
-					vertex1->Draw(colorV);
-					vertex2->Draw(colorV);
 					g->DrawLine(pen, vertex1->coord, vertex2->coord);
+					pen = gcnew Pen(Color::Black, 2);
+					if (isOriented)
+					{
+						DrawArrow(pen);
+					}
+				}
+
+				void DrawArrow(Pen^ pen)
+				{
+
 				}
 			private:
 
@@ -686,12 +712,17 @@ namespace GraphBuilder {
 				else if (drawingState == DrawingState::EdgeStart)
 				{
 					if (vertex == nullptr)
-						return;
-					if (vertex == prevVertex || doesEdgeExist(prevVertex, vertex))
 					{
-						prevVertex->Draw(findGraphByVertex(prevVertex)->color);
+						if (checkDrawableVertices(pos))
+							return;
+						prevVertex->coord = pos;
+						DrawGraphs();
 						drawingState = DrawingState::Vertex;
+						return;
 					}
+					if (vertex == prevVertex || doesEdgeExist(prevVertex, vertex))
+						return;
+
 					Edge^ edge = gcnew Edge(prevVertex, vertex);
 					Graph^ graph = findGraphByVertex(edge->vertex1);
 					Graph^ graph2 = findGraphByVertex(edge->vertex2);
@@ -920,5 +951,10 @@ namespace GraphBuilder {
 			DrawGraphs();
 		}
 
+private: System::Void orientedGraphsToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) 
+{
+	isOriented = !isOriented;
+	DrawGraphs();
+}
 };
 }
