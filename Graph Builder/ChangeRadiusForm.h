@@ -35,8 +35,10 @@ namespace GraphBuilder {
 			}
 		}
 	private: System::Windows::Forms::TextBox^ textBox1;
+	public: System::Windows::Forms::Label^ labelName;
+	private:
 	protected:
-	private: System::Windows::Forms::Label^ labelName;
+
 	private: System::Windows::Forms::Button^ buttonConfirm;
 	private: System::Windows::Forms::Button^ buttonCancel;
 

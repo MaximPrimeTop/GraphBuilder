@@ -87,6 +87,7 @@ namespace GraphBuilder {
 	private: System::Windows::Forms::ToolStripMenuItem^ generateGraphToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ newToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ orientedGraphsToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ changeWidthToolStripMenuItem;
 
 
 
@@ -143,13 +144,14 @@ namespace GraphBuilder {
 			this->randomColorToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->colorToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->changeRadiusToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->changeWidthToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->optionsToolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->generateGraphToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->orientedGraphsToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->colorDialog1 = (gcnew System::Windows::Forms::ColorDialog());
 			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->orientedGraphsToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->panelDraw->SuspendLayout();
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
@@ -192,8 +194,9 @@ namespace GraphBuilder {
 			this->newToolStripMenuItem->ImageTransparentColor = System::Drawing::Color::Magenta;
 			this->newToolStripMenuItem->Name = L"newToolStripMenuItem";
 			this->newToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::N));
-			this->newToolStripMenuItem->Size = System::Drawing::Size(146, 22);
+			this->newToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->newToolStripMenuItem->Text = L"&New";
+			this->newToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::newToolStripMenuItem_Click);
 			// 
 			// openToolStripMenuItem
 			// 
@@ -201,7 +204,7 @@ namespace GraphBuilder {
 			this->openToolStripMenuItem->ImageTransparentColor = System::Drawing::Color::Magenta;
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
 			this->openToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::O));
-			this->openToolStripMenuItem->Size = System::Drawing::Size(146, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->openToolStripMenuItem->Text = L"&Open";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::openToolStripMenuItem_Click);
 			// 
@@ -211,7 +214,7 @@ namespace GraphBuilder {
 			this->saveToolStripMenuItem->ImageTransparentColor = System::Drawing::Color::Magenta;
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
 			this->saveToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::S));
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(146, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->saveToolStripMenuItem->Text = L"&Save";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::saveToolStripMenuItem_Click);
 			// 
@@ -227,9 +230,9 @@ namespace GraphBuilder {
 			// 
 			// customizeToolStripMenuItem
 			// 
-			this->customizeToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+			this->customizeToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
 				this->randomColorToolStripMenuItem,
-					this->colorToolStripMenuItem, this->changeRadiusToolStripMenuItem
+					this->colorToolStripMenuItem, this->changeRadiusToolStripMenuItem, this->changeWidthToolStripMenuItem
 			});
 			this->customizeToolStripMenuItem->Name = L"customizeToolStripMenuItem";
 			this->customizeToolStripMenuItem->Size = System::Drawing::Size(180, 22);
@@ -261,6 +264,14 @@ namespace GraphBuilder {
 			this->changeRadiusToolStripMenuItem->Text = L"Change radius";
 			this->changeRadiusToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::changeRadius_Click);
 			// 
+			// changeWidthToolStripMenuItem
+			// 
+			this->changeWidthToolStripMenuItem->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"changeWidthToolStripMenuItem.Image")));
+			this->changeWidthToolStripMenuItem->Name = L"changeWidthToolStripMenuItem";
+			this->changeWidthToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->changeWidthToolStripMenuItem->Text = L"Change width";
+			this->changeWidthToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::changeWidthToolStripMenuItem_Click);
+			// 
 			// optionsToolStripMenuItem1
 			// 
 			this->optionsToolStripMenuItem1->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
@@ -274,9 +285,17 @@ namespace GraphBuilder {
 			// generateGraphToolStripMenuItem
 			// 
 			this->generateGraphToolStripMenuItem->Name = L"generateGraphToolStripMenuItem";
-			this->generateGraphToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->generateGraphToolStripMenuItem->Size = System::Drawing::Size(160, 22);
 			this->generateGraphToolStripMenuItem->Text = L"Generate Graph";
 			this->generateGraphToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::generateGraph_Click);
+			// 
+			// orientedGraphsToolStripMenuItem
+			// 
+			this->orientedGraphsToolStripMenuItem->CheckOnClick = true;
+			this->orientedGraphsToolStripMenuItem->Name = L"orientedGraphsToolStripMenuItem";
+			this->orientedGraphsToolStripMenuItem->Size = System::Drawing::Size(160, 22);
+			this->orientedGraphsToolStripMenuItem->Text = L"Oriented Graphs";
+			this->orientedGraphsToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::orientedGraphsToolStripMenuItem_Click);
 			// 
 			// saveFileDialog1
 			// 
@@ -296,14 +315,6 @@ namespace GraphBuilder {
 			// 
 			this->timer1->Enabled = true;
 			this->timer1->Tick += gcnew System::EventHandler(this, &GraphForm::timer1_Tick_1);
-			// 
-			// orientedGraphsToolStripMenuItem
-			// 
-			this->orientedGraphsToolStripMenuItem->CheckOnClick = true;
-			this->orientedGraphsToolStripMenuItem->Name = L"orientedGraphsToolStripMenuItem";
-			this->orientedGraphsToolStripMenuItem->Size = System::Drawing::Size(180, 22);
-			this->orientedGraphsToolStripMenuItem->Text = L"Oriented Graphs";
-			this->orientedGraphsToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::orientedGraphsToolStripMenuItem_Click);
 			// 
 			// GraphForm
 			// 
@@ -326,12 +337,14 @@ namespace GraphBuilder {
 #pragma endregion
 		static Graphics^ g;
 		static int R = 50;
+		static int Width = 10;
 		static bool randomColor = true;
 		static Color bgColor;
 		static Color currentColor = Color::Black;
 		static Random^ rnd = gcnew Random();
 		static StatsForm^ stats;
 		static bool isOriented = false;
+		static double pi = 3.141592653589793;
 		enum class DrawingState
 		{
 			Vertex,
@@ -362,6 +375,25 @@ namespace GraphBuilder {
 					count += tempGraph->Vertices->Count;
 					N = count + 1;
 				}
+
+				Vertex(Point pos, int r)
+				{
+					coord = pos;
+					this->r = r;
+					int count = 0;
+					for each (auto graph in Graphs)
+						count += graph->Vertices->Count;
+					count += tempGraph->Vertices->Count;
+					N = count + 1;
+				}
+
+				Vertex(int x, int y, int n, int r)
+				{
+					coord = Point(x, y);
+					N = n;
+					this->r = r;
+				}
+
 				void Draw(Color color)
 				{
 					Brush^ brush = gcnew SolidBrush(color);
@@ -386,9 +418,9 @@ namespace GraphBuilder {
 					return false;
 				}
 
-				bool isDrawable(Point pos)
+				bool isDrawable(Point pos, int radius)
 				{
-					if (hypot(coord.X - pos.X, coord.Y - pos.Y) <= (r + R) / 2)
+					if (hypot(coord.X - pos.X, coord.Y - pos.Y) <= (r + radius) / 2)
 						return true;
 					return false;
 				}
@@ -399,10 +431,12 @@ namespace GraphBuilder {
 			public:
 				Vertex^ vertex1;
 				Vertex^ vertex2;
-				Edge(Vertex^ v1, Vertex^ v2)
+				int width;
+				Edge(Vertex^ v1, Vertex^ v2, int w)
 				{
 					vertex1 = v1;
 					vertex2 = v2;
+					width = w;
 				}
 
 				bool operator==(Edge^ other)
@@ -416,18 +450,34 @@ namespace GraphBuilder {
 
 				void Draw(Color colorV, Color colorE)
 				{
-					Pen^ pen = gcnew Pen(colorE);
+					Pen^ pen = gcnew Pen(colorE, width);
 					g->DrawLine(pen, vertex1->coord, vertex2->coord);
 					pen = gcnew Pen(Color::Black, 2);
-					if (isOriented)
-					{
-						DrawArrow(pen);
-					}
 				}
 
 				void DrawArrow(Pen^ pen)
 				{
+					double angle = atan2(vertex2->coord.Y - vertex1->coord.Y, vertex2->coord.X - vertex1->coord.X);
+					Point arrowStart = Point
+					(
+						vertex2->coord.X - vertex2->r / 2 * cos(angle),
+						vertex2->coord.Y - vertex2->r / 2 * sin(angle)
+					);
+					double angle1 = angle - (pi / 6);
+					double angle2 = angle + (pi / 6);
 
+					Point arrowEnd1 = Point
+					(
+						arrowStart.X - vertex2->r * cos(angle1),
+						arrowStart.Y - vertex2->r * sin(angle1)
+					);
+					Point arrowEnd2 = Point
+					(
+						arrowStart.X - vertex2->r * cos(angle2),
+						arrowStart.Y - vertex2->r * sin(angle2)
+					);
+					g->DrawLine(pen, arrowStart, arrowEnd1);
+					g->DrawLine(pen, arrowStart, arrowEnd2);
 				}
 			private:
 
@@ -458,6 +508,9 @@ namespace GraphBuilder {
 						edge->Draw(color, color);
 					for each (auto vertex in Vertices)
 						vertex->Draw(color);
+					if (isOriented)
+						for each (auto edge in Edges)
+							edge->DrawArrow(gcnew Pen(color, edge->width));
 				}
 				Edge^ findEdge(Edge^ edge)
 				{
@@ -476,10 +529,9 @@ namespace GraphBuilder {
 							Edges->RemoveAt(i);
 					}
 					Vertices->Remove(vertex);
+					RenumberVertices(vertex->N);
 					if (Vertices->Count == 0)
-					{
 						Graphs->Remove(this);
-					}
 					RebuildGraphs();
 				}
 
@@ -511,7 +563,10 @@ namespace GraphBuilder {
 				Form::OnMove(e);
 
 				if (stats != nullptr && !stats->IsDisposed)
+				{
+					stats->BringToFront();
 					stats->Location = Point(this->Right, this->Top + 31);
+				}
 			}
 
 		static void DrawGraphs()
@@ -532,18 +587,31 @@ namespace GraphBuilder {
 			return nullptr;
 		}
 
-		bool checkDrawableVertices(Point pos)
+		bool checkDrawableVertices(Point pos, int r)
 		{
 			for each (auto graph in Graphs)
 				for each (auto vertex in graph->Vertices)
-					if (vertex->isDrawable(pos))
+					if (vertex->isDrawable(pos, r))
 						return true;
+			return false;
+		}
+
+		bool checkIfYouCanMoveVertex(Point pos, Vertex^ v)
+		{
+			for each(auto graph in Graphs)
+				for each(auto vertex in graph->Vertices)
+				{
+					if (vertex == v)
+						continue;
+					if (vertex->isDrawable(pos, v->r))
+						return true;
+				}
 			return false;
 		}
 
 		bool doesEdgeExist(Vertex^ v1, Vertex^ v2)
 		{
-			Edge^ edge = gcnew Edge(v1, v2);
+			Edge^ edge = gcnew Edge(v1, v2, Width);
 			for each (auto graph in Graphs)
 				for each (auto e in graph->Edges)
 					if (e == edge)
@@ -629,19 +697,14 @@ namespace GraphBuilder {
 						newGraph->Edges->Add(e);
 				Graphs->Add(newGraph);
 			}
-			RenumberVertices();
 		}
 
-		static void RenumberVertices()
+		static void RenumberVertices(int DeletedVertexIndex)
 		{
-			int num = 1;
 			for each (auto graph in Graphs)
-			{
 				for each (auto vertex in graph->Vertices)
-				{
-					vertex->N = num++;
-				}
-			}
+					if (vertex->N > DeletedVertexIndex)
+						vertex->N--;
 		}
 
 		static Color RandomColor()
@@ -694,13 +757,13 @@ namespace GraphBuilder {
 				{
 					if (vertex == nullptr)
 					{
-						if (checkDrawableVertices(pos))
+						if (checkDrawableVertices(pos, R))
 							return;
 						Graph^ graph = gcnew Graph();
 						vertex = gcnew Vertex(pos);
 						graph->Vertices->Add(vertex);
-						vertex->Draw(graph->color);
 						Graphs->Add(graph);
+						DrawGraphs();
 					}
 					else
 					{
@@ -713,7 +776,7 @@ namespace GraphBuilder {
 				{
 					if (vertex == nullptr)
 					{
-						if (checkDrawableVertices(pos))
+						if (checkIfYouCanMoveVertex(pos, prevVertex))
 							return;
 						prevVertex->coord = pos;
 						DrawGraphs();
@@ -721,15 +784,19 @@ namespace GraphBuilder {
 						return;
 					}
 					if (vertex == prevVertex || doesEdgeExist(prevVertex, vertex))
+					{
+						drawingState = DrawingState::Vertex;
+						DrawGraphs();
 						return;
+					}
 
-					Edge^ edge = gcnew Edge(prevVertex, vertex);
+					Edge^ edge = gcnew Edge(prevVertex, vertex, Width);
 					Graph^ graph = findGraphByVertex(edge->vertex1);
 					Graph^ graph2 = findGraphByVertex(edge->vertex2);
 					MergeGraphs(graph, graph2);
 					graph->Edges->Add(edge);
-					edge->Draw(graph->color, graph->color);
 					drawingState = DrawingState::Vertex;
+					DrawGraphs();
 					return;
 				}
 			}
@@ -756,7 +823,7 @@ namespace GraphBuilder {
 					Graph^ graph = findGraphByVertex(vertex);
 					if (graph == prevGraph && doesEdgeExist(prevVertex, vertex))
 					{
-						graph->DeleteEdge(gcnew Edge(prevVertex, vertex));
+						graph->DeleteEdge(gcnew Edge(prevVertex, vertex, Width));
 						DrawGraphs();
 					}
 					else
@@ -778,13 +845,18 @@ namespace GraphBuilder {
 					writer->WriteLine(Graphs[i]->color.ToArgb());
 					writer->WriteLine(Graphs[i]->Vertices->Count);
 					for (int j = 0; j < Graphs[i]->Vertices->Count; j++)
+					{
 						writer->WriteLine(Graphs[i]->Vertices[j]->coord.X + " " + Graphs[i]->Vertices[j]->coord.Y);
+						writer->WriteLine(Graphs[i]->Vertices[j]->r);
+						writer->WriteLine(Graphs[i]->Vertices[j]->N);
+					}
 					writer->WriteLine(Graphs[i]->Edges->Count);
 					for(int j = 0; j < Graphs[i]->Edges->Count; j++)
 					{
 						int v1Index = Graphs[i]->Vertices->IndexOf(Graphs[i]->Edges[j]->vertex1);
 						int v2Index = Graphs[i]->Vertices->IndexOf(Graphs[i]->Edges[j]->vertex2);
 						writer->WriteLine(v1Index + " " + v2Index);
+						writer->WriteLine(Graphs[i]->Edges[j]->width);
 					}
 				}
 				writer->Close();
@@ -808,7 +880,9 @@ namespace GraphBuilder {
 						array<String^>^ coords = reader->ReadLine()->Split(' ');
 						int x = Convert::ToInt32(coords[0]);
 						int y = Convert::ToInt32(coords[1]);
-						graph->Vertices->Add(gcnew Vertex(x, y));
+						int r = Convert::ToInt32(reader->ReadLine());
+						int n = Convert::ToInt32(reader->ReadLine());
+						graph->Vertices->Add(gcnew Vertex(x, y, n, r));
 					}
 					int edgeCount = Convert::ToInt32(reader->ReadLine());
 					for (int j = 0; j < edgeCount; j++)
@@ -816,7 +890,8 @@ namespace GraphBuilder {
 						array<String^>^ indices = reader->ReadLine()->Split(' ');
 						int v1Index = Convert::ToInt32(indices[0]);
 						int v2Index = Convert::ToInt32(indices[1]);
-						graph->Edges->Add(gcnew Edge(graph->Vertices[v1Index], graph->Vertices[v2Index]));
+						int width = Convert::ToInt32(reader->ReadLine());
+						graph->Edges->Add(gcnew Edge(graph->Vertices[v1Index], graph->Vertices[v2Index], width));
 					}
 					Graphs->Add(graph);
 				}
@@ -944,7 +1019,7 @@ namespace GraphBuilder {
 					v1 = tempGraph->Vertices[rnd->Next(vertexN)];
 					v2 = tempGraph->Vertices[rnd->Next(vertexN)];
 				} while (v1 == v2 || doesEdgeExist(v1, v2));
-				tempGraph->Edges->Add(gcnew Edge(v1, v2));
+				tempGraph->Edges->Add(gcnew Edge(v1, v2, Width));
 			}
 			Graphs->Add(tempGraph);
 			RebuildGraphs();
@@ -955,6 +1030,22 @@ private: System::Void orientedGraphsToolStripMenuItem_Click(System::Object^ send
 {
 	isOriented = !isOriented;
 	DrawGraphs();
+}
+private: System::Void changeWidthToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) 
+{
+	ChangeRadiusForm^ form = gcnew ChangeRadiusForm();
+	form->labelName->Text = "Choose a new width for edges";
+	form->Text = "change da width yo";
+	if (form->ShowDialog() == Windows::Forms::DialogResult::OK)
+	{
+		Width = form->R;
+		DrawGraphs();
+	}
+}
+private: System::Void newToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) 
+{
+	Graphs->Clear();
+	DrawGraphs();	
 }
 };
 }
