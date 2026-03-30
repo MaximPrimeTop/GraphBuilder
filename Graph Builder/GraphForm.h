@@ -88,6 +88,7 @@ namespace GraphBuilder {
 	private: System::Windows::Forms::ToolStripMenuItem^ newToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ orientedGraphsToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ changeWidthToolStripMenuItem;
+	private: System::Windows::Forms::Button^ button1;
 
 
 
@@ -152,12 +153,14 @@ namespace GraphBuilder {
 			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->panelDraw->SuspendLayout();
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// panelDraw
 			// 
+			this->panelDraw->Controls->Add(this->button1);
 			this->panelDraw->Controls->Add(this->menuStrip1);
 			this->panelDraw->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->panelDraw->Location = System::Drawing::Point(0, 0);
@@ -194,7 +197,7 @@ namespace GraphBuilder {
 			this->newToolStripMenuItem->ImageTransparentColor = System::Drawing::Color::Magenta;
 			this->newToolStripMenuItem->Name = L"newToolStripMenuItem";
 			this->newToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::N));
-			this->newToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->newToolStripMenuItem->Size = System::Drawing::Size(146, 22);
 			this->newToolStripMenuItem->Text = L"&New";
 			this->newToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::newToolStripMenuItem_Click);
 			// 
@@ -204,7 +207,7 @@ namespace GraphBuilder {
 			this->openToolStripMenuItem->ImageTransparentColor = System::Drawing::Color::Magenta;
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
 			this->openToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::O));
-			this->openToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(146, 22);
 			this->openToolStripMenuItem->Text = L"&Open";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::openToolStripMenuItem_Click);
 			// 
@@ -214,7 +217,7 @@ namespace GraphBuilder {
 			this->saveToolStripMenuItem->ImageTransparentColor = System::Drawing::Color::Magenta;
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
 			this->saveToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::S));
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(146, 22);
 			this->saveToolStripMenuItem->Text = L"&Save";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::saveToolStripMenuItem_Click);
 			// 
@@ -235,7 +238,7 @@ namespace GraphBuilder {
 					this->colorToolStripMenuItem, this->changeRadiusToolStripMenuItem, this->changeWidthToolStripMenuItem
 			});
 			this->customizeToolStripMenuItem->Name = L"customizeToolStripMenuItem";
-			this->customizeToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->customizeToolStripMenuItem->Size = System::Drawing::Size(130, 22);
 			this->customizeToolStripMenuItem->Text = L"&Customize";
 			// 
 			// randomColorToolStripMenuItem
@@ -244,7 +247,7 @@ namespace GraphBuilder {
 			this->randomColorToolStripMenuItem->CheckOnClick = true;
 			this->randomColorToolStripMenuItem->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->randomColorToolStripMenuItem->Name = L"randomColorToolStripMenuItem";
-			this->randomColorToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->randomColorToolStripMenuItem->Size = System::Drawing::Size(150, 22);
 			this->randomColorToolStripMenuItem->Text = L"Random color";
 			this->randomColorToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::randomColor_Click);
 			// 
@@ -252,7 +255,7 @@ namespace GraphBuilder {
 			// 
 			this->colorToolStripMenuItem->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"colorToolStripMenuItem.Image")));
 			this->colorToolStripMenuItem->Name = L"colorToolStripMenuItem";
-			this->colorToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->colorToolStripMenuItem->Size = System::Drawing::Size(150, 22);
 			this->colorToolStripMenuItem->Text = L"Choose Color";
 			this->colorToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::changeColor_Click);
 			// 
@@ -260,7 +263,7 @@ namespace GraphBuilder {
 			// 
 			this->changeRadiusToolStripMenuItem->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"changeRadiusToolStripMenuItem.Image")));
 			this->changeRadiusToolStripMenuItem->Name = L"changeRadiusToolStripMenuItem";
-			this->changeRadiusToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->changeRadiusToolStripMenuItem->Size = System::Drawing::Size(150, 22);
 			this->changeRadiusToolStripMenuItem->Text = L"Change radius";
 			this->changeRadiusToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::changeRadius_Click);
 			// 
@@ -268,7 +271,7 @@ namespace GraphBuilder {
 			// 
 			this->changeWidthToolStripMenuItem->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"changeWidthToolStripMenuItem.Image")));
 			this->changeWidthToolStripMenuItem->Name = L"changeWidthToolStripMenuItem";
-			this->changeWidthToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->changeWidthToolStripMenuItem->Size = System::Drawing::Size(150, 22);
 			this->changeWidthToolStripMenuItem->Text = L"Change width";
 			this->changeWidthToolStripMenuItem->Click += gcnew System::EventHandler(this, &GraphForm::changeWidthToolStripMenuItem_Click);
 			// 
@@ -279,7 +282,7 @@ namespace GraphBuilder {
 					this->orientedGraphsToolStripMenuItem
 			});
 			this->optionsToolStripMenuItem1->Name = L"optionsToolStripMenuItem1";
-			this->optionsToolStripMenuItem1->Size = System::Drawing::Size(180, 22);
+			this->optionsToolStripMenuItem1->Size = System::Drawing::Size(130, 22);
 			this->optionsToolStripMenuItem1->Text = L"&Options";
 			// 
 			// generateGraphToolStripMenuItem
@@ -315,6 +318,16 @@ namespace GraphBuilder {
 			// 
 			this->timer1->Enabled = true;
 			this->timer1->Tick += gcnew System::EventHandler(this, &GraphForm::timer1_Tick_1);
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(924, 179);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->TabIndex = 1;
+			this->button1->Text = L"button1";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &GraphForm::button1_Click);
 			// 
 			// GraphForm
 			// 
@@ -370,10 +383,10 @@ namespace GraphBuilder {
 					coord = pos;
 					r = R;
 					int count = 0;
-					for each (auto graph in Graphs)
+					for each (auto graph in ConnectedComponents)
 						count += graph->Vertices->Count;
 					count += tempGraph->Vertices->Count;
-					N = count + 1;
+					N = count;
 				}
 
 				Vertex(Point pos, int r)
@@ -381,10 +394,10 @@ namespace GraphBuilder {
 					coord = pos;
 					this->r = r;
 					int count = 0;
-					for each (auto graph in Graphs)
+					for each (auto graph in ConnectedComponents)
 						count += graph->Vertices->Count;
 					count += tempGraph->Vertices->Count;
-					N = count + 1;
+					N = count;
 				}
 
 				Vertex(int x, int y, int n, int r)
@@ -483,13 +496,13 @@ namespace GraphBuilder {
 
 			};
 
-			ref class Graph
+			ref class ConnectedComponent
 			{
 			public:
 				List<Vertex^>^ Vertices = gcnew List<Vertex^>();
 				List<Edge^>^ Edges = gcnew List<Edge^>();
 				Color color;
-				Graph()
+				ConnectedComponent()
 				{
 					if (randomColor)
 						color = RandomColor();
@@ -497,7 +510,7 @@ namespace GraphBuilder {
 						color = currentColor;
 				}
 
-				Graph(Color c)
+				ConnectedComponent(Color c)
 				{
 					color = c;
 				}
@@ -531,7 +544,7 @@ namespace GraphBuilder {
 					Vertices->Remove(vertex);
 					RenumberVertices(vertex->N);
 					if (Vertices->Count == 0)
-						Graphs->Remove(this);
+						ConnectedComponents->Remove(this);
 					RebuildGraphs();
 				}
 
@@ -545,9 +558,43 @@ namespace GraphBuilder {
 					RebuildGraphs();
 				}
 			};
+
+			ref class Path
+			{
+				public:
+				List<Edge^>^ Edges = gcnew List<Edge^>();
+				List<Vertex^>^ Vertices = gcnew List<Vertex^>();
+				Color color;
+				Path(Color c, List<int>^ path)
+				{
+					color = c;
+					for (int i = 0; i < path->Count; i++)
+						Vertices->Add(findVertexByN(path[i]));
+					for (int i = 0; i < path->Count - 1; i++)
+						Edges->Add(findEdgeByVertices(Vertices[i], Vertices[i + 1]));
+				}
+				void DrawPath()
+				{
+					for each (auto edge in Edges)
+						edge->Draw(color, color);
+					for each (auto vertex in Vertices)
+						vertex->Draw(color);
+					for each (auto edge in Edges)
+						edge->DrawArrow(gcnew Pen(color, edge->width));
+				}
+				void ClearPath()
+				{
+					for each (auto edge in Edges)
+						edge->Draw(bgColor, bgColor);
+					for each (auto vertex in Vertices)
+						vertex->Draw(bgColor);
+				}
+			};
 		#pragma endregion
 	private:
-		static List<Graph^>^ Graphs = gcnew List<Graph^>();
+		static List<ConnectedComponent^>^ ConnectedComponents = gcnew List<ConnectedComponent^>();
+		static List<Vertex^>^ AllVertices = gcnew List<Vertex^>();
+		static List<Edge^>^ AllEdges = gcnew List<Edge^>();
 		void GraphForm_Load(System::Object^ sender, System::EventArgs^ e)
 		{
 			g = panelDraw->CreateGraphics();
@@ -555,6 +602,7 @@ namespace GraphBuilder {
 			stats = gcnew StatsForm();
 			stats->Location = Point(this->Right, this->Top + 31);
 			stats->Show();
+			PrintDick();
 		}
 
 		protected:
@@ -572,7 +620,7 @@ namespace GraphBuilder {
 		static void DrawGraphs()
 		{
 			g->Clear(bgColor);
-			for each (auto graph in Graphs)
+			for each (auto graph in ConnectedComponents)
 			{
 				graph->DrawGraph();
 			}
@@ -580,7 +628,7 @@ namespace GraphBuilder {
 
 		Vertex^ checkVertices(Point pos)
 		{
-			for each (auto graph in Graphs)
+			for each (auto graph in ConnectedComponents)
 				for each (auto vertex in graph->Vertices)
 					if (vertex->isClicked(pos))
 						return vertex;
@@ -589,7 +637,7 @@ namespace GraphBuilder {
 
 		bool checkDrawableVertices(Point pos, int r)
 		{
-			for each (auto graph in Graphs)
+			for each (auto graph in ConnectedComponents)
 				for each (auto vertex in graph->Vertices)
 					if (vertex->isDrawable(pos, r))
 						return true;
@@ -598,7 +646,7 @@ namespace GraphBuilder {
 
 		bool checkIfYouCanMoveVertex(Point pos, Vertex^ v)
 		{
-			for each(auto graph in Graphs)
+			for each(auto graph in ConnectedComponents)
 				for each(auto vertex in graph->Vertices)
 				{
 					if (vertex == v)
@@ -612,57 +660,75 @@ namespace GraphBuilder {
 		bool doesEdgeExist(Vertex^ v1, Vertex^ v2)
 		{
 			Edge^ edge = gcnew Edge(v1, v2, Width);
-			for each (auto graph in Graphs)
+			for each (auto graph in ConnectedComponents)
 				for each (auto e in graph->Edges)
 					if (e == edge)
 						return true;
 			return false;
 		}
+
+		static Vertex^ findVertexByN(int n)
+		{
+			for each (auto graph in ConnectedComponents)
+				for each (auto vertex in graph->Vertices)
+					if (vertex->N == n)
+						return vertex;
+			return nullptr;
+		}
+
+		static Edge^ findEdgeByVertices(Vertex^ v1, Vertex^ v2)
+		{
+			Edge^ edge = gcnew Edge(v1, v2, Width);
+			for each (auto graph in ConnectedComponents)
+				for each (auto e in graph->Edges)
+					if (e == edge)
+						return e;
+			return nullptr;
+		}
+
 		// I HAVE NO IDEA HOW THIS SHIT WORKS I STOLE IT
 		//
 		//
 		// IT WORKS THO
+
 		static void RebuildGraphs()
 		{
-			List<Vertex^>^ allVertices = gcnew List<Vertex^>();
-			List<Edge^>^ allEdges = gcnew List<Edge^>();
+			Dictionary<Vertex^, ConnectedComponent^>^ originalGraph = gcnew Dictionary<Vertex^, ConnectedComponent^>();
+			Dictionary<ConnectedComponent^, int>^ componentCount = gcnew Dictionary<ConnectedComponent^, int>();
 
-			Dictionary<Vertex^, Graph^>^ originalGraph = gcnew Dictionary<Vertex^, Graph^>();
-			Dictionary<Graph^, int>^ componentCount = gcnew Dictionary<Graph^, int>();
-
-			for each (auto g in Graphs)
+			for each (auto g in ConnectedComponents)
 			{
 				componentCount[g] = 0;
 
 				for each (auto v in g->Vertices)
 				{
-					allVertices->Add(v);
+					AllVertices->Add(v);
 					originalGraph[v] = g;
 				}
 
 				for each (auto e in g->Edges)
-					allEdges->Add(e);
+					AllEdges->Add(e);
 			}
 
 			Dictionary<Vertex^, List<Vertex^>^>^ adj = gcnew Dictionary<Vertex^, List<Vertex^>^>();
-			for each (auto v in allVertices)
+			for each (auto v in AllVertices)
 				adj[v] = gcnew List<Vertex^>();
 
-			for each (auto e in allEdges)
+			for each (auto e in AllEdges)
 			{
 				adj[e->vertex1]->Add(e->vertex2);
 				adj[e->vertex2]->Add(e->vertex1);
 			}
 
-			Graphs->Clear();
+			ConnectedComponents->Clear();
 			HashSet<Vertex^>^ visited = gcnew HashSet<Vertex^>();
 
-			for each (auto start in allVertices)
+			for each (auto start in AllVertices)
 			{
 				if (visited->Contains(start))
 					continue;
 
-				Graph^ oldGraph = originalGraph[start];
+				ConnectedComponent^ oldGraph = originalGraph[start];
 				componentCount[oldGraph]++;
 
 				Color color;
@@ -672,7 +738,7 @@ namespace GraphBuilder {
 				else
 					color = RandomColor();
 
-				Graph^ newGraph = gcnew Graph(color);
+				ConnectedComponent^ newGraph = gcnew ConnectedComponent(color);
 
 				Stack<Vertex^>^ stack = gcnew Stack<Vertex^>();
 				stack->Push(start);
@@ -692,19 +758,141 @@ namespace GraphBuilder {
 						}
 					}
 				}
-				for each (auto e in allEdges)
+				for each (auto e in AllEdges)
 					if (newGraph->Vertices->Contains(e->vertex1) && newGraph->Vertices->Contains(e->vertex2))
 						newGraph->Edges->Add(e);
-				Graphs->Add(newGraph);
+				ConnectedComponents->Add(newGraph);
 			}
 		}
 
 		static void RenumberVertices(int DeletedVertexIndex)
 		{
-			for each (auto graph in Graphs)
+			for each (auto graph in ConnectedComponents)
 				for each (auto vertex in graph->Vertices)
 					if (vertex->N > DeletedVertexIndex)
 						vertex->N--;
+		}
+
+		static List<List<int>^>^ GetAdjacencyList()
+		{
+			List<List<int>^>^ adjacencyList = gcnew List<List<int>^>;
+			for (int i = 0; i < AllVertices->Count; i++)
+			{
+				adjacencyList->Add(gcnew List<int>);
+				for each (auto edge in AllEdges)
+				{
+					if (AllVertices[i] == edge->vertex1)
+						adjacencyList[i]->Add(edge->vertex2->N);
+					else if (!isOriented && AllVertices[i] == edge->vertex2)
+						adjacencyList[i]->Add(edge->vertex1->N);
+				}
+			}
+			return adjacencyList;
+		}
+
+		static void PrintDick()
+		{
+			Console::WriteLine("8==");
+		}
+
+		static void PrintDictionary(List<List<int>^>^ dict)
+		{
+			for (int i = 0; i < dict->Count; i++)
+			{
+				Console::Write(i + ":  ");
+				for each (auto v in dict[i])
+					Console::Write(v + " ");
+				Console::WriteLine();
+			}
+		}
+
+		static int NonZeroVertex(List<List<int>^>^ adjacent)
+		{
+			for (int i = 0; i < adjacent->Count; i++)
+				if (adjacent[i]->Count > 0)
+					return i;
+			return -1;
+		}
+
+		static bool IsEulerPath(List<List<int>^>^ adjacent)
+		{
+			int oddCount = 0;
+			for (int i = 0; i < adjacent->Count; i++)
+				if (adjacent[i]->Count % 2 != 0)
+					oddCount++;
+			return oddCount == 0 || oddCount == 2;
+		}
+
+		static bool IsEulerCircuit(List<List<int>^>^ adjacent)
+		{
+			if (!isOriented)
+			{
+				for (int i = 0; i < adjacent->Count; i++)
+					if (adjacent[i]->Count % 2 != 0)
+						return false;
+			}
+			else
+			{
+
+				for (int i = 0; i < adjacent->Count; i++)
+				{
+					int count = 0;
+					 for (int j = 0; j < adjacent->Count; j++)
+					 {
+						 if (adjacent[i]->Contains(j))
+							 count++;
+						 if (adjacent[j]->Contains(i))
+							 count--;
+					 }
+					 if (count != 0)
+						 return false;
+				}
+			}
+
+
+			return true;
+		}
+
+		static int FindBiggestDegree(List<List<int>^>^ adjacent)
+		{
+			int maxDegree = 0;
+			int vertexIndex = -1;
+			for (int i = 0; i < adjacent->Count; i++)
+				if (adjacent[i]->Count > maxDegree)
+				{
+					maxDegree = adjacent[i]->Count;
+					vertexIndex = i;
+				}
+			return vertexIndex;
+		}
+		static Path^ FindEulerCircuit(ConnectedComponent^ graph)
+		{
+			List<List<int>^>^ adjacent = GetAdjacencyList();
+			if (!IsEulerCircuit(adjacent))
+				return nullptr;
+			List<int>^ currentPath = gcnew List<int>;
+			currentPath->Add(0);
+			List<int>^ finalPath = gcnew List<int>;
+			while (currentPath->Count > 0)
+			{
+				int currentVertex = currentPath[currentPath->Count - 1];
+				if (adjacent[currentVertex]->Count > 0)
+				{
+					List<int>^ neighbors = adjacent[currentVertex];
+					int nextVertex = neighbors[neighbors->Count - 1];
+					adjacent[currentVertex]->RemoveAt(adjacent[currentVertex]->Count - 1);
+					if (adjacent[nextVertex]->Contains(currentVertex))
+						adjacent[nextVertex]->Remove(currentVertex);
+					currentPath->Add(nextVertex);
+				}
+				else
+				{
+					finalPath->Add(currentVertex);
+					currentPath->RemoveAt(currentPath->Count - 1);
+				}
+			}
+			Path^ eulerPath = gcnew Path(RandomColor(), finalPath);
+			return eulerPath;
 		}
 
 		static Color RandomColor()
@@ -712,24 +900,24 @@ namespace GraphBuilder {
 			return Color::FromArgb(rnd->Next(256), rnd->Next(256), rnd->Next(256));
 		}
 
-		static Graph^ findGraphByVertex(Vertex^ vertex)
+		static ConnectedComponent^ findGraphByVertex(Vertex^ vertex)
 		{
-			for each (auto graph in Graphs)
+			for each (auto graph in ConnectedComponents)
 				if (graph->Vertices->Contains(vertex))
 					return graph;
 			return nullptr;
 		}
 
-		static Graph^ findGraphByEdge(Edge^ edge)
+		static ConnectedComponent^ findGraphByEdge(Edge^ edge)
 		{
-			for each (auto graph in Graphs)
+			for each (auto graph in ConnectedComponents)
 				for each (auto e in graph->Edges)
 					if (e == edge)
 						return graph;
 			return nullptr;
 		}
 
-		void MergeGraphs(Graph^ graph1, Graph^ graph2)
+		void MergeGraphs(ConnectedComponent^ graph1, ConnectedComponent^ graph2)
 		{
 			if (graph1 == graph2)
 				return;
@@ -737,12 +925,12 @@ namespace GraphBuilder {
 				graph1->Vertices->Add(vertex);
 			for each (auto edge in graph2->Edges)
 				graph1->Edges->Add(edge);
-			Graphs->Remove(graph2);
+			ConnectedComponents->Remove(graph2);
 			graph1->DrawGraph();
 		}
 
 		Vertex^ prevVertex;
-		Graph^ prevGraph;	
+		ConnectedComponent^ prevGraph;	
 		void panelDraw_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
 		{
 			auto pos = e->Location;
@@ -759,10 +947,10 @@ namespace GraphBuilder {
 					{
 						if (checkDrawableVertices(pos, R))
 							return;
-						Graph^ graph = gcnew Graph();
+						ConnectedComponent^ graph = gcnew ConnectedComponent();
 						vertex = gcnew Vertex(pos);
 						graph->Vertices->Add(vertex);
-						Graphs->Add(graph);
+						ConnectedComponents->Add(graph);
 						DrawGraphs();
 					}
 					else
@@ -791,8 +979,8 @@ namespace GraphBuilder {
 					}
 
 					Edge^ edge = gcnew Edge(prevVertex, vertex, Width);
-					Graph^ graph = findGraphByVertex(edge->vertex1);
-					Graph^ graph2 = findGraphByVertex(edge->vertex2);
+					ConnectedComponent^ graph = findGraphByVertex(edge->vertex1);
+					ConnectedComponent^ graph2 = findGraphByVertex(edge->vertex2);
 					MergeGraphs(graph, graph2);
 					graph->Edges->Add(edge);
 					drawingState = DrawingState::Vertex;
@@ -820,7 +1008,7 @@ namespace GraphBuilder {
 						DrawGraphs();
 						return;
 					}
-					Graph^ graph = findGraphByVertex(vertex);
+					ConnectedComponent^ graph = findGraphByVertex(vertex);
 					if (graph == prevGraph && doesEdgeExist(prevVertex, vertex))
 					{
 						graph->DeleteEdge(gcnew Edge(prevVertex, vertex, Width));
@@ -839,24 +1027,24 @@ namespace GraphBuilder {
 			if (saveFileDialog1->ShowDialog() == Windows::Forms::DialogResult::OK)
 			{
 				StreamWriter^ writer = gcnew StreamWriter(saveFileDialog1->FileName);
-				writer->WriteLine(Graphs->Count);
-				for (int i = 0; i < Graphs->Count; i++)
+				writer->WriteLine(ConnectedComponents->Count);
+				for (int i = 0; i < ConnectedComponents->Count; i++)
 				{
-					writer->WriteLine(Graphs[i]->color.ToArgb());
-					writer->WriteLine(Graphs[i]->Vertices->Count);
-					for (int j = 0; j < Graphs[i]->Vertices->Count; j++)
+					writer->WriteLine(ConnectedComponents[i]->color.ToArgb());
+					writer->WriteLine(ConnectedComponents[i]->Vertices->Count);
+					for (int j = 0; j < ConnectedComponents[i]->Vertices->Count; j++)
 					{
-						writer->WriteLine(Graphs[i]->Vertices[j]->coord.X + " " + Graphs[i]->Vertices[j]->coord.Y);
-						writer->WriteLine(Graphs[i]->Vertices[j]->r);
-						writer->WriteLine(Graphs[i]->Vertices[j]->N);
+						writer->WriteLine(ConnectedComponents[i]->Vertices[j]->coord.X + " " + ConnectedComponents[i]->Vertices[j]->coord.Y);
+						writer->WriteLine(ConnectedComponents[i]->Vertices[j]->r);
+						writer->WriteLine(ConnectedComponents[i]->Vertices[j]->N);
 					}
-					writer->WriteLine(Graphs[i]->Edges->Count);
-					for(int j = 0; j < Graphs[i]->Edges->Count; j++)
+					writer->WriteLine(ConnectedComponents[i]->Edges->Count);
+					for(int j = 0; j < ConnectedComponents[i]->Edges->Count; j++)
 					{
-						int v1Index = Graphs[i]->Vertices->IndexOf(Graphs[i]->Edges[j]->vertex1);
-						int v2Index = Graphs[i]->Vertices->IndexOf(Graphs[i]->Edges[j]->vertex2);
+						int v1Index = ConnectedComponents[i]->Vertices->IndexOf(ConnectedComponents[i]->Edges[j]->vertex1);
+						int v2Index = ConnectedComponents[i]->Vertices->IndexOf(ConnectedComponents[i]->Edges[j]->vertex2);
 						writer->WriteLine(v1Index + " " + v2Index);
-						writer->WriteLine(Graphs[i]->Edges[j]->width);
+						writer->WriteLine(ConnectedComponents[i]->Edges[j]->width);
 					}
 				}
 				writer->Close();
@@ -869,10 +1057,10 @@ namespace GraphBuilder {
 			{
 				StreamReader^ reader = gcnew StreamReader(openFileDialog1->FileName);
 				int graphCount = Convert::ToInt32(reader->ReadLine());
-				Graphs->Clear();
+				ConnectedComponents->Clear();
 				for (int i = 0; i < graphCount; i++)
 				{
-					Graph^ graph = gcnew Graph();
+					ConnectedComponent^ graph = gcnew ConnectedComponent();
 					graph->color = Color::FromArgb(Convert::ToInt32(reader->ReadLine()));
 					int vertexCount = Convert::ToInt32(reader->ReadLine());
 					for (int j = 0; j < vertexCount; j++)
@@ -893,7 +1081,7 @@ namespace GraphBuilder {
 						int width = Convert::ToInt32(reader->ReadLine());
 						graph->Edges->Add(gcnew Edge(graph->Vertices[v1Index], graph->Vertices[v2Index], width));
 					}
-					Graphs->Add(graph);
+					ConnectedComponents->Add(graph);
 				}
 				reader->Close();
 				DrawGraphs();
@@ -920,7 +1108,7 @@ namespace GraphBuilder {
 		{
 			bool changed = false;
 			List<Label^>^ labels = stats->Labels;
-			for (int i = 0; i < Graphs->Count; i++)
+			for (int i = 0; i < ConnectedComponents->Count; i++)
 			{
 				if (i >= stats->Labels->Count)
 				{
@@ -931,16 +1119,16 @@ namespace GraphBuilder {
 					labels->Add(label);
 					changed = true;
 				}
-				if (labels[i]->Text != "Graph " + (i + 1) + ": " + Graphs[i]->Vertices->Count + " vertices, " + Graphs[i]->Edges->Count + " edges")
+				if (labels[i]->Text != "Graph " + (i + 1) + ": " + ConnectedComponents[i]->Vertices->Count + " vertices, " + ConnectedComponents[i]->Edges->Count + " edges")
 				{
 					changed = true;
-					labels[i]->Text = "Graph " + (i + 1) + ": " + Graphs[i]->Vertices->Count + " vertices, " + Graphs[i]->Edges->Count + " edges";
+					labels[i]->Text = "Graph " + (i + 1) + ": " + ConnectedComponents[i]->Vertices->Count + " vertices, " + ConnectedComponents[i]->Edges->Count + " edges";
 				}
-				labels[i]->BackColor = Graphs[i]->color;
+				labels[i]->BackColor = ConnectedComponents[i]->color;
 			}
-			if (labels->Count > Graphs->Count)
+			if (labels->Count > ConnectedComponents->Count)
 			{
-				labels->RemoveRange(Graphs->Count, labels->Count - Graphs->Count);
+				labels->RemoveRange(ConnectedComponents->Count, labels->Count - ConnectedComponents->Count);
 				changed = true;
 			}
 			if (changed)
@@ -963,10 +1151,10 @@ namespace GraphBuilder {
 				GenerateGraph(form->VertexN, form->EdgeN);
 			}
 		}
-		static Graph^tempGraph = gcnew Graph();
+		static ConnectedComponent^tempGraph = gcnew ConnectedComponent();
 		void GenerateGraph(int vertexN, int edgeN)
 		{
-			tempGraph = gcnew Graph();
+			tempGraph = gcnew ConnectedComponent();
 			for (int i = 0; i < vertexN; i++)
 			{
 				int x, y;
@@ -991,7 +1179,7 @@ namespace GraphBuilder {
 
 					if (valid)
 					{
-						for each (auto g in Graphs)
+						for each (auto g in ConnectedComponents)
 						{
 							for each (auto v in g->Vertices)
 							{
@@ -1021,7 +1209,7 @@ namespace GraphBuilder {
 				} while (v1 == v2 || doesEdgeExist(v1, v2));
 				tempGraph->Edges->Add(gcnew Edge(v1, v2, Width));
 			}
-			Graphs->Add(tempGraph);
+			ConnectedComponents->Add(tempGraph);
 			RebuildGraphs();
 			DrawGraphs();
 		}
@@ -1044,8 +1232,45 @@ private: System::Void changeWidthToolStripMenuItem_Click(System::Object^ sender,
 }
 private: System::Void newToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) 
 {
-	Graphs->Clear();
+	ConnectedComponents->Clear();
 	DrawGraphs();	
 }
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) 
+{
+	AddAndSortAllVerticesAndEdges();
+	Console::WriteLine(IsEulerPath(GetAdjacencyList()));
+	Path^ eulerPath = FindEulerCircuit(ConnectedComponents[0]);
+	if (eulerPath != nullptr)
+	{
+		for each (auto vertex in eulerPath->Vertices)
+			Console::Write(vertex->N + " ");
+		Console::WriteLine();
+		eulerPath->DrawPath();
+	}
+	else
+	{
+		Console::WriteLine("No Euler Path found");
+	}
+}
+	   static void AddAndSortAllVerticesAndEdges()
+	   {
+		   AllVertices->Clear();
+		   AllEdges->Clear();
+		   int count = 0;
+		   for each (auto graph in ConnectedComponents)
+			   count += graph->Vertices->Count;
+		   for (int i = 0; i < count; i++)
+		   {
+			   for each (auto graph in ConnectedComponents)
+			   {
+				   for each (auto vertex in graph->Vertices)
+					   if (vertex->N == i)
+						   AllVertices->Add(vertex);
+				   for each (auto edge in graph->Edges)
+					   if (!AllEdges->Contains(edge))
+						   AllEdges->Add(edge);
+			   }
+		   }
+	   }
 };
 }
