@@ -1,10 +1,12 @@
 #pragma once
+#include "ClassesThing.h"
 #include <windows.h>
 #include <cmath>
 #using <System.Core.dll>
 #include "ChangeRadiusForm.h"
 #include "RandomGraphGeneratorForm.h"
 #include "StatsForm.h"
+#include "AlgorithmsForm.h"
 namespace GraphBuilder {
 
 	using namespace System;
@@ -16,8 +18,9 @@ namespace GraphBuilder {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::IO;
-
-
+	using namespace GraphLib;
+	using Vertex = GraphLib::Vertex;
+	using Edge = GraphLib::Edge;
 	public ref class GraphForm : public System::Windows::Forms::Form
 	{
 	public:
@@ -135,6 +138,7 @@ namespace GraphBuilder {
 			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(GraphForm::typeid));
 			this->panelDraw = (gcnew System::Windows::Forms::Panel());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->newToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -153,7 +157,6 @@ namespace GraphBuilder {
 			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->panelDraw->SuspendLayout();
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
@@ -168,6 +171,16 @@ namespace GraphBuilder {
 			this->panelDraw->Size = System::Drawing::Size(1264, 681);
 			this->panelDraw->TabIndex = 0;
 			this->panelDraw->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &GraphForm::panelDraw_MouseDown);
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(924, 179);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->TabIndex = 1;
+			this->button1->Text = L"button1";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &GraphForm::button1_Click);
 			// 
 			// menuStrip1
 			// 
@@ -319,16 +332,6 @@ namespace GraphBuilder {
 			this->timer1->Enabled = true;
 			this->timer1->Tick += gcnew System::EventHandler(this, &GraphForm::timer1_Tick_1);
 			// 
-			// button1
-			// 
-			this->button1->Location = System::Drawing::Point(924, 179);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
-			this->button1->TabIndex = 1;
-			this->button1->Text = L"button1";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &GraphForm::button1_Click);
-			// 
 			// GraphForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -355,9 +358,10 @@ namespace GraphBuilder {
 		static Color bgColor;
 		static Color currentColor = Color::Black;
 		static Random^ rnd = gcnew Random();
-		static StatsForm^ stats;
+		public :
+			StatsForm^ stats;
+		private:
 		static bool isOriented = false;
-		static double pi = 3.141592653589793;
 		enum class DrawingState
 		{
 			Vertex,
@@ -369,133 +373,6 @@ namespace GraphBuilder {
 
 		#pragma region Classes
 	public:
-			ref class Vertex
-			{
-			public:
-				Point coord;
-				int r;
-				int N;
-				Vertex(int x, int y) : Vertex(Point(x, y))
-				{
-				}
-				Vertex(Point pos)
-				{
-					coord = pos;
-					r = R;
-					int count = 0;
-					for each (auto graph in ConnectedComponents)
-						count += graph->Vertices->Count;
-					count += tempGraph->Vertices->Count;
-					N = count;
-				}
-
-				Vertex(Point pos, int r)
-				{
-					coord = pos;
-					this->r = r;
-					int count = 0;
-					for each (auto graph in ConnectedComponents)
-						count += graph->Vertices->Count;
-					count += tempGraph->Vertices->Count;
-					N = count;
-				}
-
-				Vertex(int x, int y, int n, int r)
-				{
-					coord = Point(x, y);
-					N = n;
-					this->r = r;
-				}
-
-				void Draw(Color color)
-				{
-					Brush^ brush = gcnew SolidBrush(color);
-					g->FillEllipse(brush, coord.X - r / 2, coord.Y - r / 2, r, r);
-					brush = gcnew SolidBrush(Color::White);
-					StringFormat^ format = gcnew StringFormat();
-					format->Alignment = StringAlignment::Center;
-					format->LineAlignment = StringAlignment::Center;
-					g->DrawString(N.ToString(), gcnew Drawing::Font("Arial", r / 2), brush, coord, format);
-				}
-
-				void Clear()
-				{
-					Brush^ brush = gcnew SolidBrush(bgColor);
-					g->FillEllipse(brush, coord.X - r / 2, coord.Y - r / 2, r, r);
-				}
-
-				bool isClicked(Point pos)
-				{
-					if (hypot(coord.X - pos.X, coord.Y - pos.Y) <= r / 2)
-						return true;
-					return false;
-				}
-
-				bool isDrawable(Point pos, int radius)
-				{
-					if (hypot(coord.X - pos.X, coord.Y - pos.Y) <= (r + radius) / 2)
-						return true;
-					return false;
-				}
-			};
-
-			ref class Edge
-			{
-			public:
-				Vertex^ vertex1;
-				Vertex^ vertex2;
-				int width;
-				Edge(Vertex^ v1, Vertex^ v2, int w)
-				{
-					vertex1 = v1;
-					vertex2 = v2;
-					width = w;
-				}
-
-				bool operator==(Edge^ other)
-				{
-					if (isOriented)
-						return vertex1 == other->vertex1 && vertex2 == other->vertex2;
-
-					return (vertex1 == other->vertex1 && vertex2 == other->vertex2) ||
-						(vertex1 == other->vertex2 && vertex2 == other->vertex1);
-				}
-
-				void Draw(Color colorV, Color colorE)
-				{
-					Pen^ pen = gcnew Pen(colorE, width);
-					g->DrawLine(pen, vertex1->coord, vertex2->coord);
-					pen = gcnew Pen(Color::Black, 2);
-				}
-
-				void DrawArrow(Pen^ pen)
-				{
-					double angle = atan2(vertex2->coord.Y - vertex1->coord.Y, vertex2->coord.X - vertex1->coord.X);
-					Point arrowStart = Point
-					(
-						vertex2->coord.X - vertex2->r / 2 * cos(angle),
-						vertex2->coord.Y - vertex2->r / 2 * sin(angle)
-					);
-					double angle1 = angle - (pi / 6);
-					double angle2 = angle + (pi / 6);
-
-					Point arrowEnd1 = Point
-					(
-						arrowStart.X - vertex2->r * cos(angle1),
-						arrowStart.Y - vertex2->r * sin(angle1)
-					);
-					Point arrowEnd2 = Point
-					(
-						arrowStart.X - vertex2->r * cos(angle2),
-						arrowStart.Y - vertex2->r * sin(angle2)
-					);
-					g->DrawLine(pen, arrowStart, arrowEnd1);
-					g->DrawLine(pen, arrowStart, arrowEnd2);
-				}
-			private:
-
-			};
-
 			ref class ConnectedComponent
 			{
 			public:
@@ -518,12 +395,12 @@ namespace GraphBuilder {
 				void DrawGraph()
 				{
 					for each (auto edge in Edges)
-						edge->Draw(color, color);
+						edge->Draw(color, color, g);
 					for each (auto vertex in Vertices)
-						vertex->Draw(color);
+						vertex->Draw(color, g);
 					if (isOriented)
 						for each (auto edge in Edges)
-							edge->DrawArrow(gcnew Pen(color, edge->width));
+							edge->DrawArrow(gcnew Pen(color, edge->width), g);
 				}
 				Edge^ findEdge(Edge^ edge)
 				{
@@ -576,18 +453,18 @@ namespace GraphBuilder {
 				void DrawPath()
 				{
 					for each (auto edge in Edges)
-						edge->Draw(color, color);
+						edge->Draw(color, color, g);
 					for each (auto vertex in Vertices)
-						vertex->Draw(color);
+						vertex->Draw(color, g);
 					for each (auto edge in Edges)
-						edge->DrawArrow(gcnew Pen(color, edge->width));
+						edge->DrawArrow(gcnew Pen(color, edge->width), g);
 				}
 				void ClearPath()
 				{
 					for each (auto edge in Edges)
-						edge->Draw(bgColor, bgColor);
+						edge->Draw(bgColor, bgColor, g);
 					for each (auto vertex in Vertices)
-						vertex->Draw(bgColor);
+						vertex->Draw(bgColor, g);
 				}
 			};
 		#pragma endregion
@@ -773,126 +650,9 @@ namespace GraphBuilder {
 						vertex->N--;
 		}
 
-		static List<List<int>^>^ GetAdjacencyList()
-		{
-			List<List<int>^>^ adjacencyList = gcnew List<List<int>^>;
-			for (int i = 0; i < AllVertices->Count; i++)
-			{
-				adjacencyList->Add(gcnew List<int>);
-				for each (auto edge in AllEdges)
-				{
-					if (AllVertices[i] == edge->vertex1)
-						adjacencyList[i]->Add(edge->vertex2->N);
-					else if (!isOriented && AllVertices[i] == edge->vertex2)
-						adjacencyList[i]->Add(edge->vertex1->N);
-				}
-			}
-			return adjacencyList;
-		}
-
 		static void PrintDick()
 		{
 			Console::WriteLine("8==");
-		}
-
-		static void PrintDictionary(List<List<int>^>^ dict)
-		{
-			for (int i = 0; i < dict->Count; i++)
-			{
-				Console::Write(i + ":  ");
-				for each (auto v in dict[i])
-					Console::Write(v + " ");
-				Console::WriteLine();
-			}
-		}
-
-		static int NonZeroVertex(List<List<int>^>^ adjacent)
-		{
-			for (int i = 0; i < adjacent->Count; i++)
-				if (adjacent[i]->Count > 0)
-					return i;
-			return -1;
-		}
-
-		static bool IsEulerPath(List<List<int>^>^ adjacent)
-		{
-			int oddCount = 0;
-			for (int i = 0; i < adjacent->Count; i++)
-				if (adjacent[i]->Count % 2 != 0)
-					oddCount++;
-			return oddCount == 0 || oddCount == 2;
-		}
-
-		static bool IsEulerCircuit(List<List<int>^>^ adjacent)
-		{
-			if (!isOriented)
-			{
-				for (int i = 0; i < adjacent->Count; i++)
-					if (adjacent[i]->Count % 2 != 0)
-						return false;
-			}
-			else
-			{
-
-				for (int i = 0; i < adjacent->Count; i++)
-				{
-					int count = 0;
-					 for (int j = 0; j < adjacent->Count; j++)
-					 {
-						 if (adjacent[i]->Contains(j))
-							 count++;
-						 if (adjacent[j]->Contains(i))
-							 count--;
-					 }
-					 if (count != 0)
-						 return false;
-				}
-			}
-
-
-			return true;
-		}
-
-		static int FindBiggestDegree(List<List<int>^>^ adjacent)
-		{
-			int maxDegree = 0;
-			int vertexIndex = -1;
-			for (int i = 0; i < adjacent->Count; i++)
-				if (adjacent[i]->Count > maxDegree)
-				{
-					maxDegree = adjacent[i]->Count;
-					vertexIndex = i;
-				}
-			return vertexIndex;
-		}
-		static Path^ FindEulerCircuit(ConnectedComponent^ graph)
-		{
-			List<List<int>^>^ adjacent = GetAdjacencyList();
-			if (!IsEulerCircuit(adjacent))
-				return nullptr;
-			List<int>^ currentPath = gcnew List<int>;
-			currentPath->Add(0);
-			List<int>^ finalPath = gcnew List<int>;
-			while (currentPath->Count > 0)
-			{
-				int currentVertex = currentPath[currentPath->Count - 1];
-				if (adjacent[currentVertex]->Count > 0)
-				{
-					List<int>^ neighbors = adjacent[currentVertex];
-					int nextVertex = neighbors[neighbors->Count - 1];
-					adjacent[currentVertex]->RemoveAt(adjacent[currentVertex]->Count - 1);
-					if (adjacent[nextVertex]->Contains(currentVertex))
-						adjacent[nextVertex]->Remove(currentVertex);
-					currentPath->Add(nextVertex);
-				}
-				else
-				{
-					finalPath->Add(currentVertex);
-					currentPath->RemoveAt(currentPath->Count - 1);
-				}
-			}
-			Path^ eulerPath = gcnew Path(RandomColor(), finalPath);
-			return eulerPath;
 		}
 
 		static Color RandomColor()
@@ -915,6 +675,15 @@ namespace GraphBuilder {
 					if (e == edge)
 						return graph;
 			return nullptr;
+		}
+
+		int GetNextN()
+		{
+			int count = 0;
+			for each (auto graph in ConnectedComponents)
+				count += graph->Vertices->Count;
+			count += tempGraph->Vertices->Count;
+			return count;
 		}
 
 		void MergeGraphs(ConnectedComponent^ graph1, ConnectedComponent^ graph2)
@@ -948,7 +717,7 @@ namespace GraphBuilder {
 						if (checkDrawableVertices(pos, R))
 							return;
 						ConnectedComponent^ graph = gcnew ConnectedComponent();
-						vertex = gcnew Vertex(pos);
+						vertex = gcnew Vertex(pos.X, pos.Y, GetNextN(), R);
 						graph->Vertices->Add(vertex);
 						ConnectedComponents->Add(graph);
 						DrawGraphs();
@@ -956,7 +725,7 @@ namespace GraphBuilder {
 					else
 					{
 						prevVertex = vertex;
-						vertex->Draw(Color::Red);
+						vertex->Draw(Color::Red, g);
 						drawingState = DrawingState::EdgeStart;
 					}
 				}
@@ -996,7 +765,7 @@ namespace GraphBuilder {
 				{
 					prevVertex = vertex;
 					prevGraph = findGraphByVertex(vertex);
-					vertex->Draw(Color::Red);
+					vertex->Draw(Color::Red, g);
 					drawingState = DrawingState::Deleting;
 				}
 				else if (drawingState == DrawingState::Deleting)
@@ -1197,7 +966,7 @@ namespace GraphBuilder {
 					if (attempts > 1000)
 						break;
 				} while (!valid);
-				tempGraph->Vertices->Add(gcnew Vertex(x, y));
+				tempGraph->Vertices->Add(gcnew Vertex(x, y, GetNextN(), R));
 			}
 			for (int i = 0; i < edgeN; i++)
 			{
@@ -1238,19 +1007,9 @@ private: System::Void newToolStripMenuItem_Click(System::Object^ sender, System:
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) 
 {
 	AddAndSortAllVerticesAndEdges();
-	Console::WriteLine(IsEulerPath(GetAdjacencyList()));
-	Path^ eulerPath = FindEulerCircuit(ConnectedComponents[0]);
-	if (eulerPath != nullptr)
-	{
-		for each (auto vertex in eulerPath->Vertices)
-			Console::Write(vertex->N + " ");
-		Console::WriteLine();
-		eulerPath->DrawPath();
-	}
-	else
-	{
-		Console::WriteLine("No Euler Path found");
-	}
+	AlgorithmsForm^ form = gcnew AlgorithmsForm(AllVertices, AllEdges, isOriented);
+	form->ShowDialog();
+	DrawGraphs();
 }
 	   static void AddAndSortAllVerticesAndEdges()
 	   {
@@ -1265,10 +1024,20 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 			   {
 				   for each (auto vertex in graph->Vertices)
 					   if (vertex->N == i)
+					   {
+						   vertex->colord = Color::Black;
 						   AllVertices->Add(vertex);
+					   }
 				   for each (auto edge in graph->Edges)
 					   if (!AllEdges->Contains(edge))
+					   {
+						   edge->colord = Color::Black;
+						   if (isOriented)
+							   edge->isOriented = true;
+						   else
+							   edge->isOriented = false;
 						   AllEdges->Add(edge);
+					   }
 			   }
 		   }
 	   }

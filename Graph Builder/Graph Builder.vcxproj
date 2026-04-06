@@ -81,7 +81,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies />
-      <SubSystem>NotSet</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
@@ -120,9 +120,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClassesThing.h" />
     <ClCompile Include="GraphForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlgorithmsForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="ChangeRadiusForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -137,6 +141,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AlgorithmsForm.resx">
+      <DependentUpon>AlgorithmsForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ChangeRadiusForm.resx">
       <DependentUpon>ChangeRadiusForm.h</DependentUpon>
     </EmbeddedResource>
